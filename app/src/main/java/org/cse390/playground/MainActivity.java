@@ -52,34 +52,26 @@ public class MainActivity extends AppCompatActivity {
 
     expIntentDesc.setText(styledExp);
     impIntentDesc.setText(styledImp);
-
-    initListeners();
-  }
-
-  protected void initListeners() {
-    sendExpIntent.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        ComponentName component = new ComponentName("org.cse390.playground",
-            "org.cse390.playground.TimeActivity");
-        Intent explicit = new Intent();
-        explicit.setComponent(component);
-        startActivity(explicit);
-      }
-    });
-
-//    sendImpIntent.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        launchShareIntent();
-//      }
-//    });
   }
 
   @SuppressWarnings("unused")
   @OnClick(R.id.a_main_send_implicit_intent)
-  public void clickSendImplicit(View view) {
+  public void clickSendShare(View view) {
     launchShareIntent();
+  }
+
+  @SuppressWarnings("unused")
+  @OnClick(R.id.a_main_send_explicit_intent)
+  public void clickSendExplicit(View view) {
+    launchTimeIntent();
+  }
+
+  protected void launchTimeIntent() {
+    ComponentName component = new ComponentName("org.cse390.playground",
+        "org.cse390.playground.TimeActivity");
+    Intent explicit = new Intent();
+    explicit.setComponent(component);
+    startActivity(explicit);
   }
 
   protected void launchShareIntent() {
