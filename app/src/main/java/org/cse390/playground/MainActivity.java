@@ -11,13 +11,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-  private static final String TAG = MainActivity.class.getSimpleName();
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-  private TextView expIntentDesc;
-  private TextView impIntentDesc;
-  private Button sendExpIntent;
-  private Button sendImpIntent;
+public class MainActivity extends AppCompatActivity {
+  @BindView(R.id.explicit_intent_description) TextView expIntentDesc;
+  @BindView(R.id.implicit_intent_description) TextView impIntentDesc;
+  @BindView(R.id.a_main_send_explicit_intent) Button sendExpIntent;
+  @BindView(R.id.a_main_send_implicit_intent) Button sendImpIntent;
+
+  private static final String TAG = MainActivity.class.getSimpleName();
 
   private String expIntentMsg = "An <b>explicit</b> Intent defines exactly" +
       "  what component should respond to our message. In this case," +
@@ -41,15 +45,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     Log.d(TAG, "onCreate");
-
-    this.expIntentDesc = (TextView) findViewById(
-        R.id.explicit_intent_description);
-    this.impIntentDesc = (TextView) findViewById(
-        R.id.implicit_intent_description);
-    this.sendExpIntent = (Button) findViewById(
-        R.id.a_main_send_explicit_intent);
-    this.sendImpIntent = (Button) findViewById(
-        R.id.a_main_send_implicit_intent);
+    ButterKnife.bind(this);
 
     Spanned styledExp = Html.fromHtml(expIntentMsg);
     Spanned styledImp = Html.fromHtml(impIntentMsg);
@@ -72,16 +68,26 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
-    sendImpIntent.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Intent implicit = new Intent(Intent.ACTION_SEND);
-        implicit.setType("text/plain");
-        implicit.putExtra(Intent.EXTRA_TEXT,
-            "This was shared via an implicit Intent");
-        startActivity(implicit);
-      }
-    });
+//    sendImpIntent.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View view) {
+//        launchShareIntent();
+//      }
+//    });
+  }
+
+  @SuppressWarnings("unused")
+  @OnClick(R.id.a_main_send_implicit_intent)
+  public void clickSendImplicit(View view) {
+    launchShareIntent();
+  }
+
+  protected void launchShareIntent() {
+    Intent implicit = new Intent(Intent.ACTION_SEND);
+    implicit.setType("text/plain");
+    implicit.putExtra(Intent.EXTRA_TEXT,
+        "This was shared via an implicit Intent");
+    startActivity(implicit);
   }
 
   @Override
