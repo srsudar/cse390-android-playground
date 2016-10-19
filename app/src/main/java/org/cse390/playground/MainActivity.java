@@ -1,10 +1,13 @@
 package org.cse390.playground;
 
+import android.app.ListActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
+
+public class MainActivity extends ListActivity {
   private static final String TAG = MainActivity.class.getSimpleName();
   private static final String BUNDLE_KEY_SELECTED_TAB = "tab";
 
@@ -13,6 +16,11 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     Log.d(TAG, "onCreate");
+
+    FooFactory factory = new FooFactory();
+    List<FooObject> items = factory.getFoos(25);
+    FooAdapter adapter = new FooAdapter(items);
+    setListAdapter(adapter);
   }
 
   @Override
