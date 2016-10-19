@@ -9,7 +9,6 @@ import java.util.List;
 
 public class MainActivity extends ListActivity {
   private static final String TAG = MainActivity.class.getSimpleName();
-  private static final String BUNDLE_KEY_SELECTED_TAB = "tab";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +17,12 @@ public class MainActivity extends ListActivity {
     Log.d(TAG, "onCreate");
 
     FooFactory factory = new FooFactory();
+    // Create list with 0 elements to see the android:id/empty TextView
+    // displayed.
     List<FooObject> items = factory.getFoos(25);
     FooAdapter adapter = new FooAdapter(items);
+    // Uncomment this line to use the ViewHolder pattern adapter instead.
+//    FooAdapterViewHolderPattern adapter = new FooAdapterViewHolderPattern(items);
     setListAdapter(adapter);
   }
 
