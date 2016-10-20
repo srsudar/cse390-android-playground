@@ -4,16 +4,57 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-  <TextView
-      android:id="@+id/foo_name"
-      android:padding="@dimen/activity_horizontal_margin"
+  <android.support.v7.widget.CardView
+      xmlns:card_view="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/card_view"
+      android:layout_gravity="center"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
+      android:layout_height="wrap_content"
+      android:layout_margin="@dimen/activity_horizontal_margin"
+      card_view:cardCornerRadius="4dp">
 
-  <TextView
-      android:id="@+id/stale"
-      android:padding="@dimen/activity_horizontal_margin"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <TextView
+          android:id="@+id/foo_name"
+          android:padding="@dimen/activity_horizontal_margin"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"/>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:padding="@dimen/activity_horizontal_margin"
+          android:orientation="horizontal"
+          android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="100"
+            android:text="@string/made_by_foo_factory"/>
+
+        <ImageView
+            android:id="@+id/delete_foo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_weight="1"
+            android:src="@drawable/ic_delete"/>
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/stale"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+  </android.support.v7.widget.CardView>
 
 </LinearLayout>

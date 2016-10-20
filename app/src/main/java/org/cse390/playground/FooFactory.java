@@ -2,6 +2,7 @@ package org.cse390.playground;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by sudars on 10/19/16.
@@ -19,6 +20,15 @@ public class FooFactory {
       result.add(next);
     }
 
+    return result;
+  }
+
+  public FooObject createFoo() {
+    Random random = new Random();
+    int semiRandomInt = random.nextInt(500);
+
+    FooObject result = new FooObject();
+    result.name = "I am semi-random Foo #" +semiRandomInt;
     return result;
   }
 }
