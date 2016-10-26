@@ -1,12 +1,16 @@
 package org.cse390.playground;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.Runnable;
 import java.util.concurrent.Executor;
@@ -18,6 +22,35 @@ public class MainActivity extends AppCompatActivity {
 
   private TextView message;
   private Button addToMessage;
+  private Button launchTime;
+  private Button launchInnerTask;
+  private Button launchTopLevelTask;
+  protected ContentLoadingProgressBar loading;
+
+  private class SleepTask extends AsyncTask<Integer, Long, String> {
+    @Override
+    protected void onPreExecute() {
+      loading.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected String doInBackground(Integer... integers) {
+      try {
+        Thread.sleep(5000);
+      } catch (InterruptedException e) {
+        return "Interrupted!";
+      }
+      return "slept";
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+      loading.setVisibility(View.INVISIBLE);
+      launchInnerTask.setText("Do it again!");
+      Toast.makeText(MainActivity.this, "Completed with string: " + s, Toast
+          .LENGTH_SHORT).show();
+    }
+  }
 
 
   @Override
@@ -30,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
         R.id.message);
     this.addToMessage = (Button) findViewById(
         R.id.add_to_message);
+    this.launchTime = (Button) findViewById(R.id.launch_time_activity);
+    this.launchInnerTask = (Button) findViewById(R.id.launch_inner_asynctask);
+    this.launchTopLevelTask = (Button) findViewById(
+        R.id.launch_standalone_asynctask);
+    this.loading = (ContentLoadingProgressBar) findViewById(R.id.loading);
 
     initListeners();
   }
@@ -44,6 +82,30 @@ public class MainActivity extends AppCompatActivity {
             message.append("\n new message \n");
           }
         }).start();
+      }
+    });
+
+    launchInnerTask.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        SleepTask sleepTask = new SleepTask();
+        sleepTask.execute(0, 1);
+      }
+    });
+
+    launchTime.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(MainActivity.this, TimeActivity.class);
+        startActivity(intent);
+      }
+    });
+
+    launchTopLevelTask.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        TopLevelAsyncTask topTask = new TopLevelAsyncTask(MainActivity.this);
+        topTask.execute(0, 1);
       }
     });
   }
@@ -89,4 +151,5 @@ public class MainActivity extends AppCompatActivity {
     super.onSaveInstanceState(outState);
     Log.e(TAG, "onSaveInstanceState");
   }
+
 }

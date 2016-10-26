@@ -17,6 +17,12 @@
       android:paddingRight="@dimen/activity_horizontal_margin"
       android:paddingTop="@dimen/activity_vertical_margin">
 
+    <Button
+        android:id="@+id/launch_time_activity"
+        android:text="@string/launch_time_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,6 +34,41 @@
         android:layout_height="wrap_content"
         android:id="@+id/add_to_message"
         android:text="@string/update_on_bad_thread"/>
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/loading"
+        android:visibility="invisible"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <TextView
+        android:text="@string/msg_inner_async_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/launch_inner_asynctask"
+        android:text="@string/launch_inner_asynctask"/>
+
+
+    <TextView
+        android:text="@string/msg_standalone_async_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/launch_standalone_asynctask"
+        android:text="@string/launch_standalone_asynctask"/>
+
+
 
   </LinearLayout>
 </ScrollView>
