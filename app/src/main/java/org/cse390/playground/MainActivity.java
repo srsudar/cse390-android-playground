@@ -1,6 +1,8 @@
 package org.cse390.playground;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -13,50 +15,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.Runnable;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 
-public class MainActivity extends AppCompatActivity {
-  private static final String TAG = MainActivity.class.getSimpleName();
+public class MainActivity extends AppCompatActivity implements
+    LoaderManager.LoaderCallbacks<List<FooObject>> {
 
-  private TextView message;
-  private Button addToMessage;
-  private Button launchTime;
-  private Button launchInnerTask;
-  private Button launchTopLevelTask;
-  protected ContentLoadingProgressBar loading;
-
-  private class SleepTask extends AsyncTask<Integer, Long, String> {
-    @Override
-    protected void onPreExecute() {
-      loading.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    protected String doInBackground(Integer... integers) {
-      try {
-        Thread.sleep(5000);
-      } catch (InterruptedException e) {
-        return "Interrupted!";
-      }
-      return "slept";
-    }
-
-    @Override
-    protected void onPostExecute(String s) {
-      loading.setVisibility(View.INVISIBLE);
-      launchInnerTask.setText("Do it again!");
-      Toast.makeText(MainActivity.this, "Completed with string: " + s, Toast
-          .LENGTH_SHORT).show();
-    }
-  }
-
+  private static final int LOADER_ID_FOO_OBJECTS = 1;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    getLoaderManager().initLoader(LOADER_ID_FOO_OBJECTS, null, this);
+
     Log.d(TAG, "onCreate");
 
     this.message = (TextView) findViewById(
@@ -72,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
     initListeners();
   }
 
+  private static final String TAG = MainActivity.class.getSimpleName();
+  private TextView message;
+  private Button addToMessage;
+  private Button launchTime;
+  private Button launchInnerTask;
+  private Button launchTopLevelTask;
+  protected ContentLoadingProgressBar loading;
+
   protected void initListeners() {
     addToMessage.setOnClickListener(new View.OnClickListener() {
       @Override
@@ -85,27 +67,11 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
-    launchInnerTask.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        SleepTask sleepTask = new SleepTask();
-        sleepTask.execute(0, 1);
-      }
-    });
-
     launchTime.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         Intent intent = new Intent(MainActivity.this, TimeActivity.class);
         startActivity(intent);
-      }
-    });
-
-    launchTopLevelTask.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        TopLevelAsyncTask topTask = new TopLevelAsyncTask(MainActivity.this);
-        topTask.execute(0, 1);
       }
     });
   }
@@ -152,4 +118,18 @@ public class MainActivity extends AppCompatActivity {
     Log.e(TAG, "onSaveInstanceState");
   }
 
+  @Override
+  public Loader<List<FooObject>> onCreateLoader(int i, Bundle bundle) {
+    return null;
+  }
+
+  @Override
+  public void onLoadFinished(Loader<List<FooObject>> loader, List<FooObject> fooObjects) {
+
+  }
+
+  @Override
+  public void onLoaderReset(Loader<List<FooObject>> loader) {
+
+  }
 }
