@@ -14,29 +14,43 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.Runnable;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
+
+import javax.net.ssl.HttpsURLConnection;
 
 
 public class MainActivity extends AppCompatActivity implements
     LoaderManager.LoaderCallbacks<List<FooObject>> {
 
-  private static final int LOADER_ID_FOO_OBJECTS = 1;
+
+  private static final String TAG = MainActivity.class.getSimpleName();
+  private TextView message;
+  private Button networkMainThread;
+  private Button launchTime;
+  private Button launchInnerTask;
+  private Button launchTopLevelTask;
+  protected ContentLoadingProgressBar loading;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    getLoaderManager().initLoader(LOADER_ID_FOO_OBJECTS, null, this);
 
     Log.d(TAG, "onCreate");
 
     this.message = (TextView) findViewById(
         R.id.message);
-    this.addToMessage = (Button) findViewById(
-        R.id.add_to_message);
+    this.networkMainThread = (Button) findViewById(
+        R.id.do_network_main_thread);
     this.launchTime = (Button) findViewById(R.id.launch_time_activity);
     this.launchInnerTask = (Button) findViewById(R.id.launch_inner_asynctask);
     this.launchTopLevelTask = (Button) findViewById(
@@ -46,24 +60,22 @@ public class MainActivity extends AppCompatActivity implements
     initListeners();
   }
 
-  private static final String TAG = MainActivity.class.getSimpleName();
-  private TextView message;
-  private Button addToMessage;
-  private Button launchTime;
-  private Button launchInnerTask;
-  private Button launchTopLevelTask;
-  protected ContentLoadingProgressBar loading;
-
   protected void initListeners() {
-    addToMessage.setOnClickListener(new View.OnClickListener() {
+    networkMainThread.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        new Thread(new Runnable() {
-          @Override
-          public void run() {
-            message.append("\n new message \n");
-          }
-        }).start();
+        try {
+          URL url = new URL("https://api.github.com/users/srsudar");
+          HttpsURLConnection urlConnection = (HttpsURLConnection) url
+              .openConnection();
+          InputStream in = new BufferedInputStream(urlConnection
+              .getInputStream());
+          in.read();
+        } catch (MalformedURLException e) {
+          Log.e(TAG, "malformed url", e);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       }
     });
 

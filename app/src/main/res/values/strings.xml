@@ -22,4 +22,11 @@
 
   <string name="launch_inner_asynctask">Launch Inner AsyncTask</string>
   <string name="launch_standalone_asynctask">Launch Top-Level AsyncTask</string>
+
+  <string name="do_network_on_main_thread">Do Network on Main Thread</string>
+  <string name="msg_network_on_main_thread">You should never do network requests
+  on the main thread. These can take an indeterminate amount of time, and this
+  leads to the main thread blocking and the app becoming unresponsive. Further,
+  by default Android straight up disallows this. The app will stop when you press
+  this button, as Android will kill it for doing network on the main thread.</string>
 </resources>
