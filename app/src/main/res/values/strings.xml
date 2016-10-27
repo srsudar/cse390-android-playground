@@ -13,14 +13,10 @@
   <string name="moment_on_create_called">The moment onCreate was called was: "
   </string>
 
-  <string name="msg_inner_async_task">This will create an async task that is
-  nested inside the activity as an inner class. This gives it access to the UI.</string>
-
     <string name="msg_standalone_async_task">This will create an async task that is
       defined in a separate class. This makes it more reusable, but it makes it
     harder to keep track of context and access UI.</string>
 
-  <string name="launch_inner_asynctask">Launch Inner AsyncTask</string>
   <string name="launch_standalone_asynctask">Launch Top-Level AsyncTask</string>
 
   <string name="do_network_on_main_thread">Do Network on Main Thread</string>
@@ -29,4 +25,8 @@
   leads to the main thread blocking and the app becoming unresponsive. Further,
   by default Android straight up disallows this. The app will stop when you press
   this button, as Android will kill it for doing network on the main thread.</string>
+
+  <string name="do_network_with_oktthp">OkHttp with RxJava</string>
+  <string name="msg_network_okhttp">This will do a request using okhttp, and
+  RxJava, off the main thread.</string>
 </resources>

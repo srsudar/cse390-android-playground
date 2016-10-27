@@ -27,6 +27,13 @@ import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 
 public class MainActivity extends AppCompatActivity implements
     LoaderManager.LoaderCallbacks<List<FooObject>> {
@@ -36,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements
   private TextView message;
   private Button networkMainThread;
   private Button launchTime;
-  private Button launchInnerTask;
+  private Button networkOkHttp;
   private Button launchTopLevelTask;
   protected ContentLoadingProgressBar loading;
 
@@ -52,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements
     this.networkMainThread = (Button) findViewById(
         R.id.do_network_main_thread);
     this.launchTime = (Button) findViewById(R.id.launch_time_activity);
-    this.launchInnerTask = (Button) findViewById(R.id.launch_inner_asynctask);
+    this.networkOkHttp = (Button) findViewById(R.id.do_network_http);
     this.launchTopLevelTask = (Button) findViewById(
         R.id.launch_standalone_asynctask);
     this.loading = (ContentLoadingProgressBar) findViewById(R.id.loading);
@@ -65,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements
       @Override
       public void onClick(View view) {
         try {
+          // On the main thread, this will fail!
           URL url = new URL("https://api.github.com/users/srsudar");
           HttpsURLConnection urlConnection = (HttpsURLConnection) url
               .openConnection();
@@ -84,6 +92,35 @@ public class MainActivity extends AppCompatActivity implements
       public void onClick(View view) {
         Intent intent = new Intent(MainActivity.this, TimeActivity.class);
         startActivity(intent);
+      }
+    });
+
+    networkOkHttp.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        loading.setVisibility(View.VISIBLE);
+        OkHttpFetcher fetcher = new OkHttpFetcher();
+        fetcher.getStringFromUrl("https://api.github.com/users/srduar")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Subscriber<String>() {
+              @Override
+              public void onCompleted() {
+                loading.setVisibility(View.INVISIBLE);
+              }
+
+              @Override
+              public void onError(Throwable e) {
+                loading.setVisibility(View.INVISIBLE);
+                Toast.makeText(MainActivity.this, "Something went wrong", Toast
+                    .LENGTH_SHORT).show();              }
+
+              @Override
+              public void onNext(String s) {
+                Toast.makeText(MainActivity.this, "Got string: " + s, Toast
+                    .LENGTH_SHORT).show();
+              }
+            });
       }
     });
   }

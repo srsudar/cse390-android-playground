@@ -45,7 +45,7 @@
 
 
     <TextView
-        android:text="@string/msg_inner_async_task"
+        android:text="@string/msg_network_okhttp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -53,8 +53,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/launch_inner_asynctask"
-        android:text="@string/launch_inner_asynctask"/>
+        android:id="@+id/do_network_http"
+        android:text="@string/do_network_with_oktthp"/>
 
 
     <TextView
