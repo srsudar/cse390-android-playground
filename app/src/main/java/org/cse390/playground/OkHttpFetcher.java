@@ -17,25 +17,29 @@ import rx.Observable;
 public class OkHttpFetcher {
   private static final String TAG = OkHttpFetcher.class.getSimpleName();
 
-  public Observable<String> getStringFromUrl(String url) {
+  public Observable<String> getStringFromUrl(final String url) {
     // Return this because it lets us treat this method as if it were
     // asynchronous.
     return Observable.fromCallable(new Callable<String>() {
       @Override
       public String call() throws Exception {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-            .url("https://api.github.com/users/srsudar")
-            .build();
-        try {
-          Response response = client.newCall(request).execute();
-          String result = response.body().string();
-          return result;
-        } catch (IOException e) {
-          Log.e(TAG, "io exception", e);
-        }
-        return null;
+        return fetchSynchronously(url);
       }
     });
+  }
+
+  public String fetchSynchronously(String url) {
+    OkHttpClient client = new OkHttpClient();
+    Request request = new Request.Builder()
+        .url("https://api.github.com/users/srsudar")
+        .build();
+    try {
+      Response response = client.newCall(request).execute();
+      String result = response.body().string();
+      return result;
+    } catch (IOException e) {
+      Log.e(TAG, "io exception", e);
+    }
+    return null;
   }
 }
