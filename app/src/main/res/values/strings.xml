@@ -2,7 +2,8 @@
   <string name="app_name">Playground</string>
 
   <string name="add_to_me">Add to me by pressing the button. This tries to touch
-  the view tree off the main thread, and will cause the app to force quit.</string>
+    the view tree off the main thread, and will cause the app to force quit.
+  </string>
 
   <string name="send_explicit_intent">Send Explicit Intent</string>
   <string name="send_implicit_intent">Send Implicit Intent</string>
@@ -13,20 +14,23 @@
   <string name="moment_on_create_called">The moment onCreate was called was: "
   </string>
 
-    <string name="msg_standalone_async_task">This will create an async task that is
-      defined in a separate class. This makes it more reusable, but it makes it
-    harder to keep track of context and access UI.</string>
+  <string name="msg_standalone_async_task">This will create an async task that is
+    defined in a separate class. This makes it more reusable, but it makes it
+    harder to keep track of context and access UI.
+  </string>
 
   <string name="launch_standalone_asynctask">Launch Top-Level AsyncTask</string>
 
   <string name="do_network_on_main_thread">Do Network on Main Thread</string>
   <string name="msg_network_on_main_thread">You should never do network requests
-  on the main thread. These can take an indeterminate amount of time, and this
-  leads to the main thread blocking and the app becoming unresponsive. Further,
-  by default Android straight up disallows this. The app will stop when you press
-  this button, as Android will kill it for doing network on the main thread.</string>
+    on the main thread. These can take an indeterminate amount of time, and this
+    leads to the main thread blocking and the app becoming unresponsive. Further,
+    by default Android straight up disallows this. The app will stop when you press
+    this button, as Android will kill it for doing network on the main thread.
+  </string>
 
   <string name="do_network_with_oktthp">OkHttp with RxJava</string>
   <string name="msg_network_okhttp">This will do a request using okhttp, and
-  RxJava, off the main thread.</string>
+    RxJava, off the main thread.
+  </string>
 </resources>
