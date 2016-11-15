@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
   private Button launchInnerTask;
   private Button launchTopLevelTask;
   protected ContentLoadingProgressBar loading;
+  private Button causeAnr;
 
   private class SleepTask extends AsyncTask<Integer, Long, String> {
     @Override
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     this.launchTopLevelTask = (Button) findViewById(
         R.id.launch_standalone_asynctask);
     this.loading = (ContentLoadingProgressBar) findViewById(R.id.loading);
+    this.causeAnr = (Button) findViewById(R.id.cause_anr);
 
     initListeners();
   }
@@ -106,6 +108,17 @@ public class MainActivity extends AppCompatActivity {
       public void onClick(View view) {
         TopLevelAsyncTask topTask = new TopLevelAsyncTask(MainActivity.this);
         topTask.execute(0, 1);
+      }
+    });
+
+    causeAnr.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        try {
+          Thread.sleep(15000);
+        } catch (InterruptedException e) {
+          Log.e(TAG, "interrupted");
+        }
       }
     });
   }

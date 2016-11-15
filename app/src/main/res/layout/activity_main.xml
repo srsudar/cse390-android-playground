@@ -68,6 +68,16 @@
         android:id="@+id/launch_standalone_asynctask"
         android:text="@string/launch_standalone_asynctask"/>
 
+    <TextView
+        android:text="@string/msg_cause_anr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cause_anr"
+        android:text="Cause anr"/>
 
 
   </LinearLayout>

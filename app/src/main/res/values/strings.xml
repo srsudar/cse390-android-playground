@@ -22,4 +22,10 @@
 
   <string name="launch_inner_asynctask">Launch Inner AsyncTask</string>
   <string name="launch_standalone_asynctask">Launch Top-Level AsyncTask</string>
+
+  <string name="msg_cause_anr">If you block the main thread, your app will stop
+  responding to events and will appear to be frozen. After a while Android will
+  present the dreaded "App Not Responding" error and give you a chance to kil
+  it. This button calls Thread.sleep(15000) and causes the app to freeze.</string>
+  <string name="cause_anr">Cause ANR</string>
 </resources>
