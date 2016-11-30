@@ -4,22 +4,64 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="material.css">
+    <link rel="stylesheet" type="text/css" href="custom.css">
 </head>
 
 <body>
 
-<button id="groom" class="mdl-button mdl-js-button mdl-button--raised">
-    To the Groom!
-</button>
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+            mdl-layout--fixed-tabs">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">Title</span>
+    </div>
+    <!-- Tabs -->
+    <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+      <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Hamilton</a>
+      <a href="#fixed-tab-2" class="mdl-layout__tab">FAB</a>
+      <a href="#fixed-tab-3" class="mdl-layout__tab">Surprise!</a>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Title</span>
+  </div>
+  <main class="mdl-layout__content">
+    <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+      <div class="page-content">
+
+        <button id="groom" class="mdl-button mdl-js-button mdl-button--raised">
+            To the Groom!
+        </button>
 
 
-<button id="bride" class="mdl-button mdl-js-button mdl-button--raised">
-    To the Bride!
-</button>
+        <button id="bride" class="mdl-button mdl-js-button mdl-button--raised">
+            To the Bride!
+        </button>
+      
+      </div>
+    </section>
+    <section class="mdl-layout__tab-panel" id="fixed-tab-2">
 
-<button id="fab" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
-    <i class="material-icons">+</i>
-</button>
+      <div class="page-content">
+      
+
+        <button id="fab" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored">
+            <i class="material-icons">+</i>
+        </button>
+      
+      </div>
+
+    </section>
+    <section class="mdl-layout__tab-panel" id="fixed-tab-3">
+      <div class="page-content">
+
+        <h1>This is HTML!</h1>
+      
+      </div>
+    </section>
+  </main>
+</div>
 
 
 <script type="text/javascript" src="material.js"></script>
